@@ -1,0 +1,48 @@
+download file: 
+wget --user=xm2074 --ask-password https://cs.nyu.edu/courses/spring22/CSCI-GA.2437-001/2014-03-15.log
+
+hadoop fs -ls / 			– to see the contents of the top-level directory in HDFS
+hadoop fs -ls 			– to see the contents of your user directory
+hadoop fs -ls /user/yourNetID 	– same as above
+hadoop fs -mkdir lab1 		– to create a new directory named lab1 in your user directory
+hadoop fs -ls (path)		– to verify that you now have a directory called lab1
+hadoop fs -rm -r lab1 		– to remove directory lab1
+
+hadoop fs -put /scratch/xm2074/data.txt lab1 	– to put data.txt to lab1
+hadoop fs -cat lab1/data.txt 			– to verify the content of lab1/data.txt
+
+get, mv, tail
+
+
+Spark:
+
+spark-shell --deploy-mode client 
+spark-shell --deploy-mode client --driver-java-options=-Dscala.color
+
+
+
+touch /scratch/xm2074/data.txt
+
+hadoop fs -put /scratch/xm2074/data.txt lab1
+
+
+
+
+:help
+sc.[TAB] 	– to see the commands available in the Spark Context (the REPL has tab-completions)
+sc.version 	– to get the version of Spark that is running in the shell
+val myConstant: Int = 2437
+myConstant
+myConstant.[TAB]
+myConstant.to[TAB]
+myConstant.toFloat
+myConstant 	– note that myConstant has not changed; it’s still an Int
+myConstant.toFloat.toInt
+val myString = myConstant.toString 	– note the type inferred for myString
+:type myString 		– use the :type command to see the type that is inferred for myString
+:q 			– to quit the Spark shell (alternatively, you can press Ctrl-D)
+
+
+
+
+

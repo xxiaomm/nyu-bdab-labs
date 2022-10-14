@@ -1,0 +1,84 @@
+ssh-keygen -R peel.hpc.nyu.edu
+
+spark-shell --deploy-mode client --driver-java-options=-Dscala.color
+
+ssh xm2074@peel.hpc.nyu.edu
+
+scp -p /Users/xiao/Desktop/A_bdad/lab/lab6/iot_devices.json... xm2074@dtn.hpc.nyu.edu:/home/xm2074
+hadoop fs -put iot_devices.json loudacre
+hadoop fs -ls loudacre
+
+
+
+
+val schema = "Id INT, First STRING, Last STRING, Url STRING, Published STRING, Hits INT, Campaigns ARRAY<STRING>"
+val blogsDF = spark.read.schema(schema).json("/user/xm2074/loudacre/blogs.json")
+blogsDF.show()
+
+
+Task1:
+case class DeviceIoTData(
+  battery_level: Long,
+  co2_level: Long,
+  cca2: String,
+  cca3: String,
+  cn: String,
+  device_id: Long,
+  device_name: String,
+  humidity: Long,
+  ip: String,
+  latitude: Double,
+  lcd: String,
+  longitude: Double,
+  scale: String,
+  temp: Long,
+  timestamp: Long
+)
+
+val ds = spark.read.json("/user/xm2074/loudacre/it_devices. json") -as [DeviceIoTData]
+ds. printSchema
+ds. show(5, false)
+
+
+
+Task2:
+val iotSchema = "battery_level Long, co2_level Long, cca2 String, cca3 String, cn String, device_id Long, device_name String, humidity Long, ip String, latitude Double, lcd String, longitude Double, scale String, temp Long, timestamp Long"
+
+val iotDF = spark.read.schema(iotSchema).json("/user/xm2074/loudacre/iot_devices.json")
+iotDF.select ("batterv level", "device id", "device_name") .where ($"battery_level" === 0).show(5, false)
+iotDF.select ( "battery_level") .where ($"battery_level" === 0) .agg (count ("battery_level") as "count_battery_level_0").show()
+iotDF.select("cn", "co2 _level") .groupBy("cn").agg(avg ("co2_level") as "avg_cn_co2 level") . orderBy (desc ("avg_cn_co2 _level")).show(5, false)
+
+
+
+
+
+
+
+
+
+
+
+
+
+download file: 
+wget --user=xm2074 --ask-password https://cs.nyu.edu/courses/spring22/CSCI-GA.2437-001/2014-03-15.log
+
+Spark:
+
+spark-shell --deploy-mode client 
+spark-shell --deploy-mode client --driver-java-options=-Dscala.color
+
+
+
+touch /scratch/xm2074/data.txt
+
+hadoop fs -put /scratch/xm2074/data.txt lab1
+
+
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+task1:
+val logFile = "/user/xm2074/loudacre/weblog/2014-03-15.log"
+
+val oriRdd = sc.textFile(logFile)
+
+oriRdd.take(2)
+
+
+val requestCountsRdd = oriRdd.map(line => line.split(" ")).map(line => (line(2) -> 1)).reduceByKey((v1, v2) => v1 + v2)  /  reduceByKey(_+_)
+
+
+requestCountsRdd.take(10)
+
+
+val visitFrequencyRdd = requestCountsRdd.map(line => (line._2 -> 1)).reduceByKey((v1, v2) => v1 + v2)  /  reduceByKey (_+_)
+
+
+visitFrequencyRdd.collect()
+
+
+task2:
+val user_Ip = oriRdd.map(_.split(" ")).map(line => line(2).toInt -> line(0)).distinct().groupByKey().sortByKey()
+user_Ip.take(5)
+
+val resRdd = user_Ip.map(line => line._1 + ": " + line._2.mkString(" "))
+resRdd.take(3)
+resRdd.saveAsTextFile("/user/xm2074/loudacre/useriplist")
+
+
+hadoop fs -get loudacre/useriplist localfile
+
+
+scp -r xm2074@dtn.hpc.nyu.edu:/home/xm2074/localfile/useriplist /Users/xiao/Desktop/A_bdad/lab/lab4
+
