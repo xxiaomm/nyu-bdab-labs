@@ -1,0 +1,51 @@
+
+
+val dataset = "/user/xm2074/loudacre/devstatus/devicestatus.txt"
+val oriRdd =  sc.textFile(dataset)
+oriRdd.take(3).foreach(println)
+
+sc.textFile("/path/filename.txt").map( _.split("[|,]") ).filter( _.length == 14 )
+val secRdd = oriRdd.map( _.split("[|,]") ).filter( _.length == 14)
+secRdd.collect().take(10) / take(3).foreach(println)
+
+val thirdRdd = secRdd.map(fields => (fields(0),fields(1).split(" ")(0),fields(2),fields(12),fields(13)))
+
+val testRdd = oriRdd.map(line => line.split("[|,]")).filter( _.length == 14).map(fields => (fields(0),fields(1).split(" ")(0),fields(2),fields(12),fields(13))).take(3)
+
+testRdd: Array[(String, String, String, String, String)] = Array((2014-03-15:10:10:20,Sorrento,8cc3b47e-bd01-4482-b500-28f2342679af,33.6894754264,-117.543308253), (2014-03-15:10:10:20,MeeToo,ef8c7564-0a1a-4650-a655-c8bbd5f8f943,37.4321088904,-121.485029632), (2014-03-15:10:10:20,MeeToo,23eba027-b95a-4729-9a4b-a3cca51c5548,39.4378908349,-120.938978486))
+
+
+ipRdd.saveasTextFile("")
+
+
+rename file: 
+mv localfile/output_lab3.txt localfile/output_lab
+
+
+
+sc.parallelize(Array(1,2,3,1)).fold(1)(_ + _)
+sc.parallelize(Array(1,2,3,4,5)).aggregate((0,0))((x, elem) => (x._1 + elem, x._2 + 1),(x, y) => (x._1 + y._1, x._2 + y._2))
+
+val myTuple: Tuple2[Int, java.lang.String] = Tuple2(2437,"BDAD")
+val myTuple = (2437,"BDAD")
+val myTuple = 2437       -> "BDAD"  【make pairs】
+	     myTuple._1,    myTuple._2, 
+myTuple.getClass
+
+myTuple.swap -> return a new Tuple
+
+val myTuple = (2437, "BDAD", 3.0, true, "instructor" -> "Tang")
+val (id, course, credits, isGreat, (title, name)) = myTuple
+
+myTuple.productPrefix  -> tuple’s class name
+myTuple.productArity  -> tuple size
+
+val myString = "New York"
+val myTuple = myString.partition(_.isUpper)  ->  myTuple: (String, String) = (NY,ew ork)
+
+
+val users = sc.textFile("users.txt")
+.map(line => line.split('\t'))
+map(fields => fields(0) -> fields(1))
+
+

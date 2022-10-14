@@ -1,0 +1,39 @@
+download: wget --user=xm2074 --ask-password https://cs.nyu.edu/courses/spring22/CSCI-GA.2437-001/2014-03-15.log
+
+hadoop fs -mkdir
+hadoop fs -put 2014-03-15.log loudacre/weblog
+hadoop fs -ls loudacre/weblog
+
+val logFile = "/user/xm2074/loudacre/weblog/2014-03-15.log"
+val originalRdd = sc.textFile(logFile)
+val jpgRdd = originalRdd.filter(_.contains("jpg"))
+originalRdd.count()
+jpgRdd.count()
+
+val ipRdd = originalRdd.map(line => line.split(" - ")(0))
+ipRdd.saveAsTextFile("/user/xm2074/loudacre/iplist")
+
+
+
+
+Scala:
+
+val exchangeRate: Double = 0.87
+
+val dollars: Int = 100.00.toInt
+
+var euro = 0.0
+euro = dollars * exchangeRate
+
+euroInt = (dollars * exchangeRate).toInt
+euroInt.getClass
+
+println(f "2022/2 : $$ $dollars = $euroInt euros")
+
+
+val record = "abcdefg"
+record.length
+record.contain("ab")
+record.indexOf('c')
+record.toLowerCase
+record.indexOf('z')

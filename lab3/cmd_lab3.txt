@@ -1,0 +1,67 @@
+
+
+val dataset = "/user/xm2074/loudacre/devstatus/devicestatus.txt"
+val oriRdd =  sc.textFile(dataset)
+oriRdd.take(3).foreach(println)
+
+sc.textFile("/path/filename.txt").map( _.split("[|,]") ).filter( _.length == 14 )
+val secRdd = oriRdd.map( _.split("[|,]") ).filter( _.length == 14)
+secRdd.collect().take(10) / take(3).foreach(println)
+
+val thirdRdd = secRdd.map(fields => (fields(0),fields(1).split(" ")(0),fields(2),fields(12),fields(13)))
+
+res.take(3).foreach(println)
+
+
+res.saveAsTextFile("/user/xm2074/output_Lab3")
+
+
+rename file: 
+mv localfile/output_lab3.txt localfile/output_lab
+
+
+hadoop fs -put /scratch/xm2074/devstatus.txt loudacre/devstatus
+
+scp /Users/xiao/Desktop/A_bdad/lab/lab3/xx xm2074@dtn.hpc.nyu.edu:/scratch/xm2074
+
+从hadoop下载文件到peel
+hadoop fs -get output_lab3 localfile
+ls localfile
+
+从peel下载到自己电脑
+scp -r xm2074@dtn.hpc.nyu.edu:/home/xm2074/localfile/output_lab3 /Users/xiao/Desktop/A_bdad/lab/lab3
+
+
+
+
+
+
+
+
+
+sc.parallelize(Array(1,2,3,1)).fold(1)(_ + _)
+sc.parallelize(Array(1,2,3,4,5)).aggregate((0,0))((x, elem) => (x._1 + elem, x._2 + 1),(x, y) => (x._1 + y._1, x._2 + y._2))
+
+val myTuple: Tuple2[Int, java.lang.String] = Tuple2(2437,"BDAD")
+val myTuple = (2437,"BDAD")
+val myTuple = 2437       -> "BDAD"  【make pairs】
+	     myTuple._1,    myTuple._2, 
+myTuple.getClass
+
+myTuple.swap -> return a new Tuple
+
+val myTuple = (2437, "BDAD", 3.0, true, "instructor" -> "Tang")
+val (id, course, credits, isGreat, (title, name)) = myTuple
+
+myTuple.productPrefix  -> tuple’s class name
+myTuple.productArity  -> tuple size
+
+val myString = "New York"
+val myTuple = myString.partition(_.isUpper)  ->  myTuple: (String, String) = (NY,ew ork)
+
+
+val users = sc.textFile("users.txt")
+.map(line => line.split('\t'))
+map(fields => fields(0) -> fields(1))
+
+

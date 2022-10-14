@@ -1,0 +1,52 @@
+ssh xm2074@peel.hpc.nyu.edu
+
+scp -p /Users/xiao/Desktop/A_bdad/lab/lab5/build.sbt & lab5.scala xm2074@dtn.hpc.nyu.edu:/home/xm2074
+hadoop fs -put /scratch/xm2074/build.sbt loudacre
+hadoop fs -ls loudacre
+
+
+module load sbt/1.5.1
+sbt package
+ls target
+ls target/scala-2.11
+spark-submit --class getModels target/scala-2.11/getmodels_2.11-1.0.jar
+
+hadoop fs -ls loudacre
+
+
+hadoop fs -get loudacre/account-models localfile
+
+scp -r xm2074@dtn.hpc.nyu.edu:/home/xm2074/localfile/account-models /Users/xiao/Desktop/A_bdad/lab/lab5
+
+
+
+
+
+
+
+
+
+
+
+
+download file: 
+wget --user=xm2074 --ask-password https://cs.nyu.edu/courses/spring22/CSCI-GA.2437-001/2014-03-15.log
+
+Spark:
+
+spark-shell --deploy-mode client 
+spark-shell --deploy-mode client --driver-java-options=-Dscala.color
+
+
+
+touch /scratch/xm2074/data.txt
+
+hadoop fs -put /scratch/xm2074/data.txt lab1
+
+
+
+
+
+
+
+
